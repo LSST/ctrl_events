@@ -38,6 +38,8 @@ Access to the lsst::ctrl::events classes
 
 
 %{
+#include <memory>
+
 #include "lsst/daf/base.h"
 #include "lsst/ctrl/events/Host.h"
 #include "lsst/ctrl/events/LocationId.h"
@@ -101,54 +103,54 @@ Access to the lsst::ctrl::events classes
 %extend lsst::ctrl::events::EventReceiver {
     PTR(lsst::ctrl::events::StatusEvent) receiveStatusEvent() {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent();
-        return boost::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
     }
     PTR(lsst::ctrl::events::StatusEvent) receiveStatusEvent(long timeout) {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent(timeout);
-        return boost::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
     }
     PTR(lsst::ctrl::events::CommandEvent) receiveCommandEvent() {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent();
-        return boost::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
     }
     PTR(lsst::ctrl::events::CommandEvent) receiveCommandEvent(long timeout) {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent(timeout);
-        return boost::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
     }
     PTR(lsst::ctrl::events::LogEvent) receiveLogEvent() {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent();
-        return boost::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
     }
     PTR(lsst::ctrl::events::LogEvent) receiveLogEvent(long timeout) {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent(timeout);
-        return boost::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
     }
 }
 
 %extend lsst::ctrl::events::EventDequeuer {
     PTR(lsst::ctrl::events::StatusEvent) receiveStatusEvent() {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent();
-        return boost::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
     }
     PTR(lsst::ctrl::events::StatusEvent) receiveStatusEvent(long timeout) {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent(timeout);
-        return boost::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::StatusEvent>(ev);
     }
     PTR(lsst::ctrl::events::CommandEvent) receiveCommandEvent() {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent();
-        return boost::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
     }
     PTR(lsst::ctrl::events::CommandEvent) receiveCommandEvent(long timeout) {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent(timeout);
-        return boost::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::CommandEvent>(ev);
     }
     PTR(lsst::ctrl::events::LogEvent) receiveLogEvent() {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent();
-        return boost::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
     }
     PTR(lsst::ctrl::events::LogEvent) receiveLogEvent(long timeout) {
         PTR(lsst::ctrl::events::Event) ev = self->receiveEvent(timeout);
-        return boost::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
+        return std::static_pointer_cast<lsst::ctrl::events::LogEvent>(ev);
     }
 }
 

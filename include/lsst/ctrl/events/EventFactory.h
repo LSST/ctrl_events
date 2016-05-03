@@ -37,7 +37,6 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include <boost/shared_ptr.hpp>
 
 #include "lsst/base.h"
 #include "lsst/utils/Utils.h"

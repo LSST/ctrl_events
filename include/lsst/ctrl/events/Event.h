@@ -45,7 +45,6 @@
 #include "lsst/base.h"
 #include "lsst/daf/base/PropertySet.h"
 
-#include "boost/shared_ptr.hpp"
 #include "boost/property_tree/ptree.hpp"
 
 using lsst::daf::base::PropertySet;

@@ -42,8 +42,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <boost/shared_ptr.hpp>
-
 #include "lsst/base.h"
 #include "lsst/utils/Utils.h"
 #include "lsst/daf/base/PropertySet.h"

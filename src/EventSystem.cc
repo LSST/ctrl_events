@@ -31,6 +31,8 @@
  *
  */
 
+#include <memory>
+
 #include "lsst/ctrl/events/EventSystem.h"
 #include "lsst/ctrl/events/EventLibrary.h"
 
@@ -171,11 +173,11 @@ PTR(Receiver) EventSystem::getReceiver(std::string const& name) {
 
 
 PTR(StatusEvent) EventSystem::castToStatusEvent(PTR(Event) event) {
-    return boost::static_pointer_cast<lsst::ctrl::events::StatusEvent>(event);
+    return std::static_pointer_cast<lsst::ctrl::events::StatusEvent>(event);
 }
 
 PTR(CommandEvent) EventSystem::castToCommandEvent(PTR(Event) event) {
-    return boost::static_pointer_cast<lsst::ctrl::events::CommandEvent>(event);
+    return std::static_pointer_cast<lsst::ctrl::events::CommandEvent>(event);
 }
 
 }}}

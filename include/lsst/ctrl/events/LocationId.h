@@ -35,8 +35,11 @@
 #define LSST_CTRL_EVENTS_LOCATIONID_H
 
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 
-#include "boost/shared_ptr.hpp"
+#include <string>
+
 
 namespace lsst {
 namespace ctrl {

@@ -38,7 +38,6 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include <boost/shared_ptr.hpp>
 
 #include "lsst/daf/base/PropertySet.h"
 

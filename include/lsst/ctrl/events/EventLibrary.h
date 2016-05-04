@@ -38,7 +38,6 @@
 #include <iostream>
 #include <vector>
 #include <list>
-#include <boost/shared_ptr.hpp>
 
 namespace lsst {
 namespace ctrl {

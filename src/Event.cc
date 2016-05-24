@@ -2,7 +2,7 @@
 
 /* 
  * LSST Data Management System
- * Copyright 2008-2015  AURA/LSST.
+ * Copyright 2008-2016  AURA/LSST.
  * 
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
@@ -31,7 +31,6 @@
  *
  */
 
-#include "boost/scoped_array.hpp"
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/foreach.hpp"

@@ -78,7 +78,7 @@ public:
      * @brief get the destination property name
      * @note This is the TYPE of the destination we're using, either a TOPIC or a QUEUE
      */
-    virtual std::string getDestinationPropertyName() { return NULL; }
+    virtual std::string getDestinationPropertyName() = 0;
 
     /**
      * @brief get the destination name of this Transmitter

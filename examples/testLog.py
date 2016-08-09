@@ -27,6 +27,7 @@ testLog
 Run with:
    python testLog
 """
+from __future__ import print_function
 
 #   import lsst.tests as tests
 import lsst.pex.logging as log
@@ -48,11 +49,11 @@ if __name__ == "__main__":
 #    // test creation of child log
     tlog = log.Log(logger, "test")
     tlog.log(log.Log.INFO, "I like your hat")
-    print "message sent"
+    print("message sent")
 #    // test threshold filtering
     tlog.setThreshold(log.Log.WARN)
     tlog.log(log.Log.INFO, "I like your gloves") #  // shouldn't see this 
-    print "threshold is " , tlog.getThreshold()
+    print("threshold is " , tlog.getThreshold())
 
 #    // test the persistance of threshold levels
     tlog = log.Log(logger, "test")
@@ -65,17 +66,17 @@ if __name__ == "__main__":
     tgclog.log(log.Log.INFO, "Let's play")
     tlog.setThreshold(log.Log.FATAL)
     tgclog.log(log.Log.INFO, "You go first")
-    print "message sent"
+    print("message sent")
 
 #    // test streaming
     log.LogRec(tgclog, log.Log.FATAL) << "help: I've fallen" << log.Prop("NODE", 5) << "& I can't get up" << log.endr;
-    print "message sent"
+    print("message sent")
     tmp = log.Prop("NODE",5)
     log.LogRec(tgclog, log.Log.FATAL) << "help: I've fallen" << tmp << "& I can't get up" << log.endr;
-    print "message sent"
+    print("message sent")
 
 #    // test flushing on delete
     log.LogRec(tgclog, log.Log.FATAL) << "never mind"
     tgclog = None
-    print "message sent"
+    print("message sent")
 

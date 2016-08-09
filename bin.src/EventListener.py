@@ -29,6 +29,7 @@
 #                 they are happening for debugging.
 #
 #
+from __future__ import print_function
 import lsst.ctrl.events as events
 import lsst.pex.logging as logging
 import time
@@ -43,16 +44,16 @@ def pValue(logRec, dp):
         logRec << dp
 
 if __name__ == "__main__":
-    print "starting...\n"
+    print("starting...\n")
     host = sys.argv[1]
     topic = sys.argv[2]
-    print host+"->"+topic
+    print(host+"->"+topic)
     x = events.EventReceiver(host, topic)
 
     logger = logging.ScreenLog(1)
     tlog = logging.Log(logger, "test")
 
-    print "waiting on receive...\n"
+    print("waiting on receive...\n")
     while (True):
         val = x.receive()
         if val != None:

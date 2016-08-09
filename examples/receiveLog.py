@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import range
 # 
 # LSST Data Management System
 # Copyright 2008, 2009, 2010 LSST Corporation.
@@ -24,13 +26,13 @@ import lsst.ctrl.events as events
 import time
 
 if __name__ == "__main__":
-    print "starting...\n"
+    print("starting...\n")
     receiver = events.EventReceiver("lsst8.ncsa.illinois.edu", events.EventLog.LOGGING_TOPIC)
-    print "waiting on receive...\n"
+    print("waiting on receive...\n")
     for i in range(5): 
         event = receiver.receiveEvent(8000)
         if event is not None:
             payload = event.getPropertySet()
-            print "finished!\n"
+            print("finished!\n")
             if payload.nameCount() != None:
-                print payload.toString()
+                print(payload.toString())

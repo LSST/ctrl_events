@@ -31,17 +31,8 @@
 #
 from __future__ import print_function
 import lsst.ctrl.events as events
-import lsst.pex.logging as logging
 import time
 import sys
-
-def printValue(log, info, dp):
-    logRec = logging.LogRec(log, info)
-    pValue(logRec,  dp)
-    logRec << logging.endr;
-
-def pValue(logRec, dp):
-        logRec << dp
 
 if __name__ == "__main__":
     print("starting...\n")
@@ -50,12 +41,9 @@ if __name__ == "__main__":
     print(host+"->"+topic)
     x = events.EventReceiver(host, topic)
 
-    logger = logging.ScreenLog(1)
-    tlog = logging.Log(logger, "test")
-
     print("waiting on receive...\n")
     while (True):
-        val = x.receive()
-        if val != None:
-            printValue(tlog, logging.Log.INFO, val)
-
+        ev = x.receiveEvent()
+        if ev != None:
+            ps = ev.getPropertySet()
+            print(ps.toString())

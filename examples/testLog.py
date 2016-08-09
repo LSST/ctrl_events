@@ -37,7 +37,7 @@ import lsst.ctrl.events as events
 if __name__ == "__main__":
 
     broker = "example.host.com"
-    topic = "loggingtest_%s" % str(os.getpid())
+    topic = "loggingtest"
 
     recv = events.EventReceiver(broker, topic)
 

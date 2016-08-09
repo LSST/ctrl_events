@@ -1,3 +1,4 @@
+from __future__ import print_function
 # 
 # LSST Data Management System
 # Copyright 2008, 2009, 2010 LSST Corporation.
@@ -24,12 +25,12 @@ import lsst.ctrl.events as events
 import time
 
 if __name__ == "__main__":
-    print "starting...\n"
+    print("starting...\n")
     x = events.EventReceiver("lsst8.ncsa.illinois.edu", "test_logging")
-    print "waiting on receive...\n"
+    print("waiting on receive...\n")
     val = x.receive(8000)
-    print "finished!\n"
+    print("finished!\n")
     if val != None:
-        print val.toString()
+        print(val.toString())
     else:
-        print "nothing received"
+        print("nothing received")

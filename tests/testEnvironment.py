@@ -1,3 +1,4 @@
+from builtins import object
 #!/usr/bin/env python
 
 # 
@@ -27,7 +28,7 @@ import os
 import platform
 import lsst.ctrl.events as events
 
-class TestEnvironment:
+class TestEnvironment(object):
     """Information about this testing environment"""
 
     def __init__(self):

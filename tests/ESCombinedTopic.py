@@ -23,6 +23,7 @@
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
+from __future__ import print_function
 import os
 import platform
 import unittest
@@ -72,12 +73,12 @@ class CombinedEventTestCase(unittest.TestCase):
         val = eventSystem.receiveEvent(topic1)
         self.assertIsNotNone(val)
         ps = val.getPropertySet()
-        print ps.toString()
+        print(ps.toString())
     
         val = eventSystem.receiveEvent(topic2)
         self.assertIsNotNone(val)
         ps = val.getPropertySet()
-        print ps.toString()
+        print(ps.toString())
 
 def suite():
     """Returns a suite containing all the tests cases in this module."""

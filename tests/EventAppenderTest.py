@@ -26,6 +26,8 @@
 """
 This tests the logging system in a variety of ways.
 """
+from builtins import str
+from builtins import object
 
 import lsst.log as log
 import os
@@ -81,12 +83,12 @@ class TestLog(unittest.TestCase):
             fd.seek(0)
             log4cxxOutput = ""
             for line in fd:
-               log4cxxOutput += line.rstrip()
+               log4cxxOutput += line.decode('UTF-8').rstrip()
             self.assertEquals(log4cxxOutput, value)
 
     def assertValidMessage(self, event, message):
         ps = event.getPropertySet()
-        self.assertEquals(ps.get("message"), message)
+        self.assertEqual(ps.get("message"), message)
 
 ###############################################################################
 

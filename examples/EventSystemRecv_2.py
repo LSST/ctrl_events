@@ -1,3 +1,4 @@
+from __future__ import print_function
 # 
 # LSST Data Management System
 # Copyright 2008, 2009, 2010 LSST Corporation.
@@ -31,23 +32,23 @@ if __name__ == "__main__":
 
     dp1 = system.receiveEvent("test1", 5000)
     if dp1 == None:
-        print "Nothing received from test1"
+        print("Nothing received from test1")
     else:
         ps = dp1.getPropertySet()
-        print ps.toString()
+        print(ps.toString())
 
 
     dp2 = system.receiveEvent("test2", 5000)
     if dp2 == None:
-        print "Nothing received from test2"
+        print("Nothing received from test2")
     else:
         ps = dp2.getPropertySet()
-        print ps.toString()
+        print(ps.toString())
 
     dp3 = system.receiveEvent("test3", 5000)
     if dp3 == None:
-        print "Nothing received from test3"
+        print("Nothing received from test3")
     else:
         ps = dp3.getPropertySet()
-        print ps.toString()
+        print(ps.toString())
 

@@ -26,7 +26,9 @@
 """
 Tests of the BlackboardItem classes
 """
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import object
 
 import os, platform
 import unittest
@@ -95,7 +97,7 @@ class MultiThreadTestCase(unittest.TestCase):
         flag.markers.append("waiting")
         t.join()
 
-        print flag.markers
+        print(flag.markers)
         self.assertEquals(flag.markers[2], "waiting",
                           "receive failed to release GIL")
     

@@ -1,3 +1,4 @@
+from __future__ import print_function
 # 
 # LSST Data Management System
 # Copyright 2008, 2009, 2010 LSST Corporation.
@@ -32,12 +33,12 @@ if __name__ == "__main__":
 
     dp1 = system.receiveEvent("test1")
     ps = dp1.getPropertySet()
-    print ps.toString()
+    print(ps.toString())
 
     dp2 = system.receiveEvent("test2")
     ps = dp2.getPropertySet()
-    print ps.toString()
+    print(ps.toString())
 
     dp3 = system.receiveEvent("test3")
     ps = dp3.getPropertySet()
-    print ps.toString()
+    print(ps.toString())

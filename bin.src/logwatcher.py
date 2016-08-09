@@ -26,6 +26,7 @@
 # logwatcher.py - watches for logging events, and prints them
 #
 #
+from __future__ import print_function
 import lsst.daf.base as datap
 import lsst.ctrl.events as events
 import time
@@ -33,11 +34,11 @@ import sys
 
 if __name__ == "__main__":
     host = sys.argv[1]
-    print "listening on host "+host
+    print("listening on host "+host)
     x = events.EventReceiver(host, events.LogEvent.LOGGING_TOPIC)
     while (True): 
-        print "waiting on logging event...\n"
+        print("waiting on logging event...\n")
         event = x.receiveEvent()
         val = event.getPropertySet()
         if val != None:
-            print val.toString()
+            print(val.toString())

@@ -19,6 +19,7 @@
 # the GNU General Public License along with this program.  If not, 
 # see <http://www.lsstcorp.org/LegalNotices/>.
 #
+from __future__ import print_function
 
 """demonstrate simple use of the Log facility."""
 """
@@ -27,56 +28,33 @@ testLog
 Run with:
    python testLog
 """
-from __future__ import print_function
 
-#   import lsst.tests as tests
-import lsst.pex.logging as log
+import os
+import tempfile
+import lsst.log as log
 import lsst.ctrl.events as events
 
 if __name__ == "__main__":
 
-    system = events.EventSystem().getDefaultEventSystem()
-    system.createTransmitter("lsst8.ncsa.illinois.edu", events.EventLog.LOGGING_TOPIC)
+    broker = "example.host.com"
+    topic = "loggingtest_%s" % str(os.getpid())
 
-# test a simple message to the default log
-    dlog = log.Log_getDefaultLog()
-    dlog.log(log.Log.WARN, "this is a warning")
+    recv = events.EventReceiver(broker, topic)
 
-#    // now let's create our own root log
-    logger = events.EventLog("myRun", 123)
-#    logger = log.ScreenLog(1)
+    confStr = "log4j.rootLogger=TRACE, EA\n"
+    confStr += "log4j.appender.EA=EventAppender\n"
+    confStr += "log4j.appender.EA.BROKER="+broker+"\n"
+    confStr += "log4j.appender.EA.TOPIC="+topic+"\n"
 
-#    // test creation of child log
-    tlog = log.Log(logger, "test")
-    tlog.log(log.Log.INFO, "I like your hat")
-    print("message sent")
-#    // test threshold filtering
-    tlog.setThreshold(log.Log.WARN)
-    tlog.log(log.Log.INFO, "I like your gloves") #  // shouldn't see this 
-    print("threshold is " , tlog.getThreshold())
+    tempDir = tempfile.mkdtemp()
+    outputFileName = os.path.join(tempDir, "log.out")
 
-#    // test the persistance of threshold levels
-    tlog = log.Log(logger, "test")
-    tlog.log(log.Log.INFO, "I like your shoes") #   // shouldn't see this 
-    tlog.setThreshold(log.Log.DEBUG)
-    tlog.log(log.Log.INFO, "I said, I like your shoes")
+    log.configure_prop(confStr.format(outputFileName))
 
-#    // test descendent log and ancestor's control of threshold
-    tgclog = log.Log(tlog, "grand.child")   #   // name is now "test.grand.child"
-    tgclog.log(log.Log.INFO, "Let's play")
-    tlog.setThreshold(log.Log.FATAL)
-    tgclog.log(log.Log.INFO, "You go first")
-    print("message sent")
+    # test a simple message
+    #with log.LogContext("component"):
+    log.trace("this is a trace message")
 
-#    // test streaming
-    log.LogRec(tgclog, log.Log.FATAL) << "help: I've fallen" << log.Prop("NODE", 5) << "& I can't get up" << log.endr;
-    print("message sent")
-    tmp = log.Prop("NODE",5)
-    log.LogRec(tgclog, log.Log.FATAL) << "help: I've fallen" << tmp << "& I can't get up" << log.endr;
-    print("message sent")
-
-#    // test flushing on delete
-    log.LogRec(tgclog, log.Log.FATAL) << "never mind"
-    tgclog = None
-    print("message sent")
-
+    ev = recv.receiveEvent()
+    ps = ev.getPropertySet()
+    print(ps.get("message"))

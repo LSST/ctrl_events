@@ -41,7 +41,7 @@ class TestEnvironment(object):
 
         # add any domains where the tests will be running and still be
         # expected to reach the broker above.
-        self.testDomains = ["ncsa.illinois.edu"]
+        self.testDomains = ["ncsa.illinois.edu", "amazon.com"]
 
         # add any hosts not in the domain above where the tests 
         # will be running and still be expected to reach the broker.

@@ -41,7 +41,7 @@ class TestEnvironment(object):
 
         # add any domains where the tests will be running and still be
         # expected to reach the broker above.
-        self.testDomains = ["ncsa.illinois.edu", "amazon.com"]
+        self.testDomains = ["ncsa.illinois.edu"]
 
         # add any hosts not in the domain above where the tests 
         # will be running and still be expected to reach the broker.
@@ -71,6 +71,9 @@ class TestEnvironment(object):
         # no host?
         if host is None:
             return False
+        # jenkins build?
+        if host.startswith("jenkins-"):
+            return True
         # check to see if the host is listed as able to run the tests
         if host in self.testHosts:
             return True

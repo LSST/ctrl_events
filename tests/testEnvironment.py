@@ -71,9 +71,6 @@ class TestEnvironment(object):
         # no host?
         if host is None:
             return False
-        # jenkins build?
-        if host.startswith("jenkins-"):
-            return True
         # check to see if the host is listed as able to run the tests
         if host in self.testHosts:
             return True

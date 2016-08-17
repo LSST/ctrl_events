@@ -36,7 +36,7 @@ import time
 from threading import Thread, Condition
 from lsst.ctrl.events import EventSystem
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class Flag(object):
     def __init__(self):
@@ -74,9 +74,9 @@ class MultiThreadTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testLockRelease(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         flag = Flag()

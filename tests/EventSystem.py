@@ -30,7 +30,7 @@ import lsst.pex.exceptions as ex
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class EventSystemTestCase(unittest.TestCase):
     """test EventSystem"""
@@ -117,9 +117,9 @@ class EventSystemTestCase(unittest.TestCase):
     # test command event and command event with additional filterable properties.
     # this is run as one test, rather than two because of how LocationIds are
     # generated and the checks for the local values are order dependent
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testTopicDefault(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         eventSystem = events.EventSystem.getDefaultEventSystem()
@@ -131,9 +131,9 @@ class EventSystemTestCase(unittest.TestCase):
 
         self.performEventTest(topic1)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testTopicSpecified(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         eventSystem = events.EventSystem.getDefaultEventSystem()
@@ -146,9 +146,9 @@ class EventSystemTestCase(unittest.TestCase):
 
         self.performEventTest(topic2)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testTopicSelector(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         eventSystem = events.EventSystem.getDefaultEventSystem()
@@ -160,13 +160,13 @@ class EventSystemTestCase(unittest.TestCase):
         eventSystem.createReceiver(broker, topic3, "%s  = '%s'" % (events.Event.RUNID, runid))
         self.performEventSelectorTest(runid, topic3)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testQueueOrder(self):
         # this tests the order in which the sender and receiver are created
         # and event is created and sent before the receiver exists, and the
         # receiver should still get the message
 
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         eventSystem = events.EventSystem.getDefaultEventSystem()
@@ -196,9 +196,9 @@ class EventSystemTestCase(unittest.TestCase):
         # verify PropertySet contents
         self.verifyPropertySet(recvProp)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testQueueDefaultPort(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         thisHost = platform.node()
         eventSystem = events.EventSystem.getDefaultEventSystem()
@@ -211,9 +211,9 @@ class EventSystemTestCase(unittest.TestCase):
 
         self.performEventTest(queue1)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testQueueSpecifiedPort(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         eventSystem = events.EventSystem.getDefaultEventSystem()
 
@@ -225,9 +225,9 @@ class EventSystemTestCase(unittest.TestCase):
 
         self.performEventTest(queue2)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testQueueSelector(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         thisHost = platform.node()
         eventSystem = events.EventSystem.getDefaultEventSystem()

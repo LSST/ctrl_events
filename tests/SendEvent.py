@@ -29,15 +29,15 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class SendEventTestCase(unittest.TestCase):
     """Test sending events"""
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testSendEvent(self):
         """Send an Event"""
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         self.thisHost = platform.node()
         self.broker = testEnv.getBroker()
 

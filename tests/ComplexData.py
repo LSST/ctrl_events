@@ -31,7 +31,7 @@ import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.pex.exceptions as ex
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class ComplexDataTestCase(unittest.TestCase):
     """Test complex PropertySet sending"""
@@ -90,9 +90,9 @@ class ComplexDataTestCase(unittest.TestCase):
         # ok...now publish it
         trans.publishEvent(event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.B")
@@ -105,9 +105,9 @@ class ComplexDataTestCase(unittest.TestCase):
 
         self.assertIsNotNone(val)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testPlainStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.A")
@@ -130,9 +130,9 @@ class ComplexDataTestCase(unittest.TestCase):
         self.assertNotEqual(val.getPubTime(), 0)
         self.assertGreater(val.getPubTime(), val.getEventTime())
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testIllegalFilterableStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.A")

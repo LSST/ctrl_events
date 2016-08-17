@@ -30,7 +30,7 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class StatusEventTestCase(unittest.TestCase):
     """Test StatusEvent"""
@@ -89,9 +89,9 @@ class StatusEventTestCase(unittest.TestCase):
         # ok...now publish it
         trans.publishEvent(event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testPlainStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.A")
@@ -114,9 +114,9 @@ class StatusEventTestCase(unittest.TestCase):
         self.assertEqual(val.getType(), events.EventTypes.STATUS)
 
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testStatusEventWithRunID(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topicA = self.createTopicName("test_events_10_%s.B")
@@ -138,9 +138,9 @@ class StatusEventTestCase(unittest.TestCase):
         self.assertNotEqual(val.getPubTime(), 0)
         self.assertGreater(val.getPubTime(), val.getEventTime())
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.C")
@@ -157,9 +157,9 @@ class StatusEventTestCase(unittest.TestCase):
         customValues = ['myname']
         self.assertValid(val, values, customValues)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableStatusEventWithRunID(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.D")

@@ -30,7 +30,7 @@ import unittest
 import lsst.ctrl.events as events
 import lsst.daf.base as base
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class CombinedEventTestCase(unittest.TestCase):
     """test sending one message two multiple topics with one publish"""
@@ -51,9 +51,9 @@ class CombinedEventTestCase(unittest.TestCase):
         event = events.Event("runid_es6", root)
         eventSystem.publishEvent(topicName, event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testCombinedEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic1 = "test_events_3_%s_%d" % (platform.node(), os.getpid())

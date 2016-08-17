@@ -29,7 +29,7 @@ import unittest
 import lsst.ctrl.events as events
 import lsst.daf.base as base
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class EventQueuesTestCase(unittest.TestCase):
     """Test the EventTransmitter using queues"""
@@ -41,9 +41,9 @@ class EventQueuesTestCase(unittest.TestCase):
         event = events.Event("myrunid", root)
         trans.publishEvent(event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testEventReceiverCreatedFirst(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         port = testEnv.getPort()
         thisHost = platform.node()
@@ -77,9 +77,9 @@ class EventQueuesTestCase(unittest.TestCase):
         val = recv.receiveEvent(1)
         self.assertIsNone(val)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testEventTransmitterCreatedFirst(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         port = testEnv.getPort()
         thisHost = platform.node()
@@ -114,9 +114,9 @@ class EventQueuesTestCase(unittest.TestCase):
         val = recv.receiveEvent(1)
         self.assertIsNone(val)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testDestinationPropertyName(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         port = testEnv.getPort()
         thisHost = platform.node()

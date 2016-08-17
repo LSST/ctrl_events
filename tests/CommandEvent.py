@@ -29,7 +29,7 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class CommandTestCase(unittest.TestCase):
     """test CommandEvent"""
@@ -71,9 +71,9 @@ class CommandTestCase(unittest.TestCase):
     # test command event and command event with additional filterable properties.
     # this is run as one test, rather than two because of how LocationIds are
     # generated and the checks for the local values are order dependent
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testCommandEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         thisHost = platform.node()
 

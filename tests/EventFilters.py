@@ -29,7 +29,7 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class EventFiltersTestCase(unittest.TestCase):
     """A test case user specified filterable events"""
@@ -97,9 +97,9 @@ class EventFiltersTestCase(unittest.TestCase):
         self.assertEqual(event.getEventTime(), eventTime)
 
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableSendEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         thisHost = platform.node()
 

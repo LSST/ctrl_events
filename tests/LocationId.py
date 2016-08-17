@@ -30,7 +30,7 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class LocationIdTestCase(unittest.TestCase):
     """Test LocationId"""
@@ -39,9 +39,9 @@ class LocationIdTestCase(unittest.TestCase):
         locationId = events.LocationId()
         locationId.reset()
         
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testLocationId(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         thisHost = platform.node()
 

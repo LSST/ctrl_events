@@ -29,7 +29,7 @@ import unittest
 import lsst.ctrl.events as events
 import lsst.daf.base as base
 import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
 class MultiTopicSendTestCase(unittest.TestCase):
     """Send a multitopic event"""
@@ -50,9 +50,9 @@ class MultiTopicSendTestCase(unittest.TestCase):
         event = events.Event("runid_test6",root)
         trans.publishEvent(event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testMultiTopicSend(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         thisHost = platform.node()
 

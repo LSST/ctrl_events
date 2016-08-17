@@ -34,15 +34,21 @@
 #include "lsst/ctrl/events/LocationId.h"
 #include "lsst/ctrl/events/Host.h"
 
+#include <mutex>
+
 namespace lsst {
 namespace ctrl {
 namespace events {
+
+std::mutex mtx;
 
 LocationId::LocationId() {
     Host host = Host::getHost();
     _hostname = host.getHostName();
     _pid = getpid();
+    mtx.lock();
     _localID = _localCounter++;
+    mtx.unlock();
 }
 
 LocationId::LocationId(std::string const& hostname, int pid, int localID) : 
@@ -69,6 +75,12 @@ int LocationId::getProcessID() const {
 
 int LocationId::getLocalID() const {
     return _localID;
+}
+
+void LocationId::reset() {
+    mtx.lock();
+    _localCounter = 0;
+    mtx.unlock();
 }
 
 }}}

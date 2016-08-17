@@ -72,13 +72,9 @@ class CombinedEventTestCase(unittest.TestCase):
     
         val = eventSystem.receiveEvent(topic1)
         self.assertIsNotNone(val)
-        ps = val.getPropertySet()
-        print(ps.toString())
     
         val = eventSystem.receiveEvent(topic2)
         self.assertIsNotNone(val)
-        ps = val.getPropertySet()
-        print(ps.toString())
 
 def suite():
     """Returns a suite containing all the tests cases in this module."""

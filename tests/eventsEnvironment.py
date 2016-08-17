@@ -28,7 +28,7 @@ import os
 import platform
 import lsst.ctrl.events as events
 
-class TestEnvironment(object):
+class EventsEnvironment(object):
     """Information about this testing environment"""
 
     def __init__(self):

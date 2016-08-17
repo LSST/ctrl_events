@@ -34,6 +34,10 @@ from testEnvironment import TestEnvironment
 
 class LocationIdTestCase(unittest.TestCase):
     """Test LocationId"""
+
+    def setUp(self):
+        locationId = events.LocationId()
+        locationId.reset()
         
     @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
     def testLocationId(self):

@@ -34,6 +34,10 @@ from testEnvironment import TestEnvironment
 class StatusEventOriginatorTestCase(unittest.TestCase):
     """Test StatusEvent Originator"""
 
+    def setUp(self):
+        locationId = events.LocationId()
+        locationId.reset()
+
     def sendEvent(self, brokerName, topic):
         """Send an Event."""
         trans = events.EventTransmitter(brokerName, topic)

@@ -92,6 +92,11 @@ public:
      */
     int getLocalID() const;
 
+    /** 
+     * @brief reset internal stats for location
+     */
+    void reset();
+
 protected:
     static int _localCounter; /// used for localID & is unique for instances of LocationId in a process
     std::string _hostname;    /// host name

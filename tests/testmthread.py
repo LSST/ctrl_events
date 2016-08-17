@@ -97,7 +97,6 @@ class MultiThreadTestCase(unittest.TestCase):
         flag.markers.append("waiting")
         t.join()
 
-        print(flag.markers)
         self.assertEquals(flag.markers[2], "waiting",
                           "receive failed to release GIL")
     

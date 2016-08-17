@@ -28,10 +28,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class EventFiltersTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class EventFiltersTestCase(lsst.utils.tests.TestCase):
     """A test case user specified filterable events"""
 
     def testEventFilters(self):
@@ -203,17 +206,10 @@ class EventFiltersTestCase(unittest.TestCase):
         val = recv.receiveEvent(1000)
         self.assertIsNone(val)
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(EventFiltersTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
 
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class EventFiltersMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

@@ -27,26 +27,21 @@ import socket
 import struct
 import unittest
 import lsst.ctrl.events as events
-import lsst.utils.tests as tests
+import lsst.utils.tests
 
-class HostTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class HostTestCase(lsst.utils.tests.TestCase):
     """A test for Host"""
 
     def testHostName(self):
         host = events.Host.getHost()
         self.assertEqual(socket.gethostname(), host.getHostName())
-        
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(HostTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
 
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class HostMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

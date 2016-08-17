@@ -37,10 +37,15 @@ import socket
 import sys
 import tempfile
 import unittest
+import lsst.utils.tests
 import lsst.ctrl.events as events
 from eventsEnvironment import EventsEnvironment
 
-class TestLog(unittest.TestCase):
+
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class TestLog(lsst.utils.tests.TestCase):
 
     class StderrCapture(object):
         """Redirect stderr to a file."""
@@ -352,9 +357,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-
-def main():
-    unittest.main()
+class AppenderMemoryTestCase(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    main()
+    lsst.utils.tests.init()
+    unittest.main()

@@ -29,10 +29,13 @@ import unittest
 import lsst.pex.exceptions as ex
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class EventSystemTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class EventSystemTestCase(lsst.utils.tests.TestCase):
     """test EventSystem"""
 
     def getDataSet(self):
@@ -239,18 +242,9 @@ class EventSystemTestCase(unittest.TestCase):
         eventSystem.createDequeuer(broker, queue3, "%s = '%s'" % (events.Event.RUNID, runid))
         self.performEventSelectorTest(runid, queue3)
 
-
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(EventSystemTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class EventSystemMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

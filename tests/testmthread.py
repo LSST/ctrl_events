@@ -35,8 +35,11 @@ import unittest
 import time
 from threading import Thread, Condition
 from lsst.ctrl.events import EventSystem
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
+
+def setup_module(module):
+    lsst.utils.tests.init()
 
 class Flag(object):
     def __init__(self):
@@ -66,7 +69,7 @@ class EventThread(Thread):
         self.flag.markers.append("timeout")
         
 
-class MultiThreadTestCase(unittest.TestCase):
+class MultiThreadTestCase(lsst.utils.tests.TestCase):
     """Test multitreaded sends"""
     def setUp(self):
         pass
@@ -103,17 +106,9 @@ class MultiThreadTestCase(unittest.TestCase):
 __all__ = "MultiThreadTestCase".split()
 
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(MultiThreadTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class MThreadMemoryTestCase(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

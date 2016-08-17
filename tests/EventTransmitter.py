@@ -28,10 +28,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 import lsst.daf.base as base
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class EventTransmitterTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class EventTransmitterTestCase(lsst.utils.tests.TestCase):
     """Test the EventTransmitter"""
 
     def sendEvent(self, broker, topicName, value):
@@ -85,17 +88,9 @@ class EventTransmitterTestCase(unittest.TestCase):
         val = recv.receiveEvent(1)
         self.assertIsNone(val)
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(EventTransmitterTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class EventTransmitterMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

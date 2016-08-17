@@ -30,10 +30,13 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.pex.exceptions as ex
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class ComplexDataTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class ComplexDataTestCase(lsst.utils.tests.TestCase):
     """Test complex PropertySet sending"""
 
     def createTopicName(self, template):
@@ -201,17 +204,11 @@ class ComplexDataTestCase(unittest.TestCase):
         for x in allValues:
             self.assertTrue(ps.exists(x))
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(ComplexDataTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
 
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class ComplexDataMemoryTest(lsst.utils.tests.MemoryTestCase):
+    pass
+
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

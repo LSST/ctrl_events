@@ -28,9 +28,12 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 import lsst.pex.exceptions as ex
-import lsst.utils.tests as tests
+import lsst.utils.tests
 
-class UnknownBrokerTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class UnknownBrokerTestCase(lsst.utils.tests.TestCase):
     """Test to check unknown host case"""
 
     def testUnknownBroker(self):
@@ -42,17 +45,9 @@ class UnknownBrokerTestCase(unittest.TestCase):
         self.assertRaises(ex.Exception, events.EventTransmitter, broker, topic)
     
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(UnknownBrokerTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class UnknownBrokerMemoryTestCase(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

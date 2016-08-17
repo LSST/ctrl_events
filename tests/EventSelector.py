@@ -28,10 +28,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class EventSelectorTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class EventSelectorTestCase(lsst.utils.tests.TestCase):
     """Test receiving events using the selector mechanism"""
 
     def sendEvent(self, runid, brokerName, topic):
@@ -79,17 +82,9 @@ class EventSelectorTestCase(unittest.TestCase):
         val2 = rec.receiveEvent(1)
         self.assertIsNone(val2)
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(EventSelectorTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class EventQueueMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

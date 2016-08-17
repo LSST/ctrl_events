@@ -29,10 +29,13 @@ import socket
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class LocationIdTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class LocationIdTestCase(lsst.utils.tests.TestCase):
     """Test LocationId"""
 
     def setUp(self):
@@ -109,18 +112,10 @@ class LocationIdTestCase(unittest.TestCase):
         # the broker
         returnedEvent2 = receiver.receiveEvent(1)
         self.assertIsNone(returnedEvent2)
+
+class LocationIdMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
         
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(LocationIdTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
-
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

@@ -24,11 +24,14 @@
 #
 
 import unittest
+import lsst.utils.tests
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
 
-class EventTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class EventTestCase(lsst.utils.tests.TestCase):
     """A test case for Event."""
 
     def testEventEmpty(self):
@@ -105,17 +108,9 @@ class EventTestCase(unittest.TestCase):
         self.assertEqual(event.getEventTime(), eventTime)
 
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(EventTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class EventMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

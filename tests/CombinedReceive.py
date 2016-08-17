@@ -29,10 +29,13 @@ import time
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class CombinedReceiveEventTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class CombinedReceiveEventTestCase(lsst.utils.tests.TestCase):
     """Test receiving on one topic, when it is sent to two"""
 
     def sendEvent(self, broker, topic):
@@ -117,17 +120,9 @@ class CombinedReceiveEventTestCase(unittest.TestCase):
         self.assertIsNone(val)
     
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(CombinedReceiveEventTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class CombinedMemoryTestCase(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

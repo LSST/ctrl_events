@@ -29,10 +29,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 import lsst.daf.base as base
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class CombinedEventTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class CombinedEventTestCase(lsst.utils.tests.TestCase):
     """test sending one message two multiple topics with one publish"""
 
     def sendEvent(self, topicName):
@@ -76,17 +79,9 @@ class CombinedEventTestCase(unittest.TestCase):
         val = eventSystem.receiveEvent(topic2)
         self.assertIsNotNone(val)
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(CombinedEventTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class CombinedMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

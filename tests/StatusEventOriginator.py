@@ -28,10 +28,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class StatusEventOriginatorTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class StatusEventOriginatorTestCase(lsst.utils.tests.TestCase):
     """Test StatusEvent Originator"""
 
     def setUp(self):
@@ -81,17 +84,9 @@ class StatusEventOriginatorTestCase(unittest.TestCase):
         self.assertEqual(originatorID.getProcessID(), os.getpid())
         self.assertEqual(platform.node(), originatorID.getHostName())
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(StatusEventOriginatorTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class StatusEventOriginatorMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

@@ -28,10 +28,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class CommandTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class CommandTestCase(lsst.utils.tests.TestCase):
     """test CommandEvent"""
 
     def assertValid(self, val, names, origNum, destNum):
@@ -148,17 +151,10 @@ class CommandTestCase(unittest.TestCase):
 
         self.assertTrue(event.getType(), events.EventTypes.COMMAND)
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(CommandTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
+class CommandEventMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

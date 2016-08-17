@@ -28,10 +28,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 import lsst.daf.base as base
-import lsst.utils.tests as tests
+import lsst.utils.tests
 from eventsEnvironment import EventsEnvironment
 
-class EventQueuesTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class EventQueuesTestCase(lsst.utils.tests.TestCase):
     """Test the EventTransmitter using queues"""
 
     def sendEvent(self, broker, topicName, port, value):
@@ -128,17 +131,10 @@ class EventQueuesTestCase(unittest.TestCase):
         self.assertEqual(events.Event.QUEUE, recv.getDestinationPropertyName());
         self.assertEqual(events.Event.QUEUE, trans.getDestinationPropertyName());
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(EventQueuesTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
 
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class EventQueueMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

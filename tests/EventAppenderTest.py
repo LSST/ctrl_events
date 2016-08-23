@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -12,14 +12,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -37,10 +37,15 @@ import socket
 import sys
 import tempfile
 import unittest
+import lsst.utils.tests
 import lsst.ctrl.events as events
-from testEnvironment import TestEnvironment
+from eventsEnvironment import EventsEnvironment
 
-class TestLog(unittest.TestCase):
+
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class TestLog(lsst.utils.tests.TestCase):
 
     class StderrCapture(object):
         """Redirect stderr to a file."""
@@ -92,9 +97,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testBrokerOption(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         topic = testEnv.getLoggingTopic()
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -116,9 +121,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testBrokerPortOption(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         topic = testEnv.getLoggingTopic()
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -141,9 +146,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testBrokerTopicOption(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         weirdTopic = testEnv.getLoggingTopic()+"_"+testEnv.getLoggingTopic()
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -166,9 +171,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testBrokerAlternateTopicOption(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         topic = platform.node() + "_" + str(os.getpid())
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -193,7 +198,7 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testMissingBroker(self):
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -204,9 +209,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testBadBroker(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         badBroker = "badbroker.lsstcorp.org"
         port = testEnv.getPort()
         confStr = "log4j.rootLogger=TRACE, EA\n"
@@ -219,12 +224,12 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testBadPort(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
         port = 1
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
         confStr += "log4j.appender.EA.BROKER="+broker+"\n"
@@ -234,9 +239,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testRunidSelector(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         topic = testEnv.getLoggingTopic()
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -313,12 +318,12 @@ class TestLog(unittest.TestCase):
         # make sure we didn't get any more than we should have
         ev = recvALL.receiveEvent(100)
         self.assertIsNone(ev)
-        
+
 ###############################################################################
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testHostNameAndProcessId(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         topic = testEnv.getLoggingTopic()
         confStr = "log4j.rootLogger=TRACE, EA\n"
         confStr += "log4j.appender.EA=EventAppender\n"
@@ -352,9 +357,9 @@ class TestLog(unittest.TestCase):
 
 ###############################################################################
 
-
-def main():
-    unittest.main()
+class AppenderMemoryTestCase(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    main()
+    lsst.utils.tests.init()
+    unittest.main()

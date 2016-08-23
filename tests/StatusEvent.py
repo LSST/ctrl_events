@@ -1,11 +1,11 @@
 from builtins import range
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -13,14 +13,14 @@ from builtins import range
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -29,10 +29,13 @@ import platform
 import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
-import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+import lsst.utils.tests
+from eventsEnvironment import EventsEnvironment
 
-class StatusEventTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class StatusEventTestCase(lsst.utils.tests.TestCase):
     """Test StatusEvent"""
 
     def createTopicName(self, template):
@@ -48,14 +51,14 @@ class StatusEventTestCase(unittest.TestCase):
 
     def sendPlainStatusEvent(self, broker, topic, runID=None):
         trans = events.EventTransmitter(broker, topic)
-        
+
         root = PropertySet()
         root.set(events.Event.TOPIC, topic)
         root.set("myname","myname")
         root.set(events.Event.STATUS, "my special status")
         root.set("logger.status", "my logger special status")
         root.set("logger.pid", "1")
-        
+
         eventSystem = events.EventSystem.getDefaultEventSystem();
         locationID = eventSystem.createOriginatorId()
         if runID is None:
@@ -68,7 +71,7 @@ class StatusEventTestCase(unittest.TestCase):
 
     def sendFilterableStatusEvent(self, broker, topic, runID=None):
         trans = events.EventTransmitter(broker, topic)
-        
+
         root = PropertySet()
         root.set(events.Event.TOPIC, topic)
         root.set("myname","myname")
@@ -78,7 +81,7 @@ class StatusEventTestCase(unittest.TestCase):
         filter.set("FOO", "bar")
         filter.set("PLOUGH", 123)
         filter.set("PLOVER", 0.45)
-        
+
         eventSystem = events.EventSystem.getDefaultEventSystem();
         locationID = eventSystem.createOriginatorId()
         if runID is None:
@@ -89,9 +92,9 @@ class StatusEventTestCase(unittest.TestCase):
         # ok...now publish it
         trans.publishEvent(event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testPlainStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.A")
@@ -114,9 +117,9 @@ class StatusEventTestCase(unittest.TestCase):
         self.assertEqual(val.getType(), events.EventTypes.STATUS)
 
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testStatusEventWithRunID(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topicA = self.createTopicName("test_events_10_%s.B")
@@ -138,9 +141,9 @@ class StatusEventTestCase(unittest.TestCase):
         self.assertNotEqual(val.getPubTime(), 0)
         self.assertGreater(val.getPubTime(), val.getEventTime())
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.C")
@@ -157,9 +160,9 @@ class StatusEventTestCase(unittest.TestCase):
         customValues = ['myname']
         self.assertValid(val, values, customValues)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableStatusEventWithRunID(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.D")
@@ -216,17 +219,9 @@ class StatusEventTestCase(unittest.TestCase):
         for x in allValues:
             self.assertTrue(ps.exists(x))
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(StatusEventTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
-
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class StatusEventMemoryTester(lsst.utils.tests.MemoryTestCase):
+    pass
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

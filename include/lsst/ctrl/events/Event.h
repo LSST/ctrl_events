@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file Event.h
  *
  * @ingroup ctrl/events
@@ -51,7 +51,7 @@ using lsst::daf::base::PropertySet;
 
 namespace lsst {
 namespace ctrl {
-namespace events { 
+namespace events {
 
 /**
  * @class Event
@@ -84,7 +84,7 @@ public:
     /**
      * @brief Constructor for Event
      * @param[in] properties the PropertySet to use to populate the event
-     * @param[in] filterable PropertySet of types to be added to the header 
+     * @param[in] filterable PropertySet of types to be added to the header
      *          so they can be filtered.
      */
     Event(PropertySet const& properties, PropertySet const& filterable);
@@ -107,7 +107,7 @@ public:
      * @brief Constructor for Event
      * @param[in] runid A "run id" to place in the header of this event
      * @param[in] properties the PropertySet to use to populate the event
-     * @param[in] filterable PropertySet of types to be added to the header 
+     * @param[in] filterable PropertySet of types to be added to the header
      *          so they can be filtered.
      */
     Event(std::string const& runid, PropertySet const& properties, PropertySet const& filterable);

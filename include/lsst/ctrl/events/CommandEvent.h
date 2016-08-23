@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file CommandEvent.h
  *
  * @ingroup ctrl/events
@@ -51,7 +51,7 @@ using lsst::daf::base::PropertySet;
 
 namespace lsst {
 namespace ctrl {
-namespace events { 
+namespace events {
 
 /**
  * @class CommandEvent
@@ -71,7 +71,7 @@ public:
     static const std::string DEST_LOCALID;
 
     /** @brief Creates CommandEvent which contains a PropertySet
-     *        consisting of an origination location ID and 
+     *        consisting of an origination location ID and
      *        a destination location ID, plus additional
      *        properties.
      */
@@ -101,7 +101,7 @@ public:
      * @param ps PropertySet to pass in this event
      * @param filterable additional, broker-filterable, PropertySet parameters
      */
-    CommandEvent(LocationId const& originator, LocationId const& destination, PropertySet const& ps, 
+    CommandEvent(LocationId const& originator, LocationId const& destination, PropertySet const& ps,
                     PropertySet const& filterable);
 
     /**
@@ -111,7 +111,7 @@ public:
      * @param destination destination location for this event
      * @param psp PropertySet to pass in this event
      */
-    CommandEvent(std::string const& runid, LocationId const& originator, LocationId const& destination, 
+    CommandEvent(std::string const& runid, LocationId const& originator, LocationId const& destination,
                     CONST_PTR(PropertySet)& psp);
 
     /**
@@ -121,7 +121,7 @@ public:
      * @param destination destination location for this event
      * @param ps PropertySet to pass in this event
      */
-    CommandEvent(std::string const& runid, LocationId const& originator, LocationId const& destination, 
+    CommandEvent(std::string const& runid, LocationId const& originator, LocationId const& destination,
                     PropertySet const& ps);
 
     /**
@@ -132,7 +132,7 @@ public:
      * @param ps PropertySet to pass in this event
      * @param filterable additional, broker-filterable, PropertySet parameters
      */
-    CommandEvent(std::string const& runid, LocationId const& originator, LocationId const& destination, 
+    CommandEvent(std::string const& runid, LocationId const& originator, LocationId const& destination,
                     PropertySet const& ps, PropertySet const& filterable);
 
     /**
@@ -141,7 +141,7 @@ public:
      */
     CommandEvent(cms::TextMessage *msg);
 
-    /** 
+    /**
      * @brief destructor
      */
     virtual ~CommandEvent();

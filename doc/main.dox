@@ -2,7 +2,7 @@
 \mainpage lsst::ctrl::events ctrl_events Package
 
 @section messagingOverview Messaging Overview
-The ctrl_events package is used to send messages between networked entities.  Messages are send to a message broker on either a “queue” or a “topic”.  The broker passes messages to consumers.   
+The ctrl_events package is used to send messages between networked entities.  Messages are send to a message broker on either a “queue” or a “topic”.  The broker passes messages to consumers.
 
 Generally speaking the difference between a queue and topic is that a queue is considered a “one-to-one” relationship between a message producer and a message consumer, in the sense that one producer provides a message which can be retrieved by one, and only one, consumer.  When a message is sent to a queue, that message is retained by the broker until the message is retrieved by a consumer or until the message queue is destroyed.   Once a message is retrieved by a consumer, that message can not be retrieved by any other consumer.   Note that one consumer can be waiting on the same queue for a single message.  In this case it is indeterminate which consumer will receive the message.
 
@@ -15,7 +15,7 @@ There can be more than one producer sending messages on a queue or topic, but th
 
 The ctrl_events package is a C++ and Python layer on top of the ActiveMQCPP library.   The ctrl_events package abstracts the use of the ActiveMQCPP library, providing a simpler interface and a way to send an LSST primitive, PropertySet, easily.
 
-The basic message object type in the package is an Event, which packages a user-defined PropertySet object.  
+The basic message object type in the package is an Event, which packages a user-defined PropertySet object.
 
 @code
 ps = PropertySet()
@@ -53,7 +53,7 @@ enqueuer.publishEvent(ev)
 
 @section receivingEvents Receiving Events
 
-The objects EventReceiver and EventDequeuer are used to obtain Events which were sent to the broker.   
+The objects EventReceiver and EventDequeuer are used to obtain Events which were sent to the broker.
 
 To receive events that were sent to a topic, create an EventReceiver.   From the time the EventReceiver is created, it can retrieve all Events sent to the topic it is bound to until the EventReceiver is destroyed.  Events that were sent on a topic before an EventReceiver was created can not be retrieved by that EventReceiver.  If the EventReceiver is destroyed and recreated by the same process, any messages sent to the topic during that time can not be retrieved.
 
@@ -74,18 +74,18 @@ As mentioned previously, Events contain some information which is common to all 
 
 There are several Event Types that are available in the ctrl_events package.  These event types contain additional information which is kept in the header.
 
-Event 
+Event
 	- generic Event type
 
-StatusEvent 
+StatusEvent
 	- used to send status from a particular host and process
 	- header values from Event and originating host, process, and unique identifier
 
-CommandEvent 
+CommandEvent
 	- used to direct commands to a particular host and process (should be used with a selector -see below)
-	- header values from StatusEvent and destination host, process and unique identifier 
+	- header values from StatusEvent and destination host, process and unique identifier
 
-LogEvent 
+LogEvent
 	- use to send lsst.log logging statement
 	- header values from StatusEvent, logging level, and logger name
 
@@ -120,7 +120,7 @@ In this example, both the values of “system” and “version” would be able
 
 @section eventsystem EventSystem
 
-All producer and consumer types can be created with the EventSystem object, and then addressed directly through that object to send and receive Events. 
+All producer and consumer types can be created with the EventSystem object, and then addressed directly through that object to send and receive Events.
 
 For example, you can create an EventTransmitter via EventSystem in an initialization routine like this:
 

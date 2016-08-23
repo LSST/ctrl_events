@@ -161,7 +161,7 @@ public:
 
     /**
      * @brief create an LocationId
-     * @return a LocationId 
+     * @return a LocationId
      */
     PTR(LocationId) createOriginatorId() const;
 

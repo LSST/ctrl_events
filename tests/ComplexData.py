@@ -1,11 +1,11 @@
 from builtins import range
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -13,14 +13,14 @@ from builtins import range
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -30,10 +30,13 @@ import unittest
 import lsst.ctrl.events as events
 from lsst.daf.base import PropertySet
 import lsst.pex.exceptions as ex
-import lsst.utils.tests as tests
-from testEnvironment import TestEnvironment
+import lsst.utils.tests
+from eventsEnvironment import EventsEnvironment
 
-class ComplexDataTestCase(unittest.TestCase):
+def setup_module(module):
+    lsst.utils.tests.init()
+
+class ComplexDataTestCase(lsst.utils.tests.TestCase):
     """Test complex PropertySet sending"""
 
     def createTopicName(self, template):
@@ -49,7 +52,7 @@ class ComplexDataTestCase(unittest.TestCase):
 
     def sendPlainStatusEvent(self, broker, topic, runID=None):
         trans = events.EventTransmitter(broker, topic)
-        
+
         root = PropertySet()
         root.set(events.Event.TOPIC, topic)
         root.set("myname","myname")
@@ -60,7 +63,7 @@ class ComplexDataTestCase(unittest.TestCase):
         root.set("logger.pid.xyzzy", 1)
         root.set("logger.pid.plover", 3.14)
         root.set("logger.pid.plugh", "a hollow voice says")
-        
+
         eventSystem = events.EventSystem.getDefaultEventSystem();
         locationID = eventSystem.createOriginatorId()
         if runID is None:
@@ -90,9 +93,9 @@ class ComplexDataTestCase(unittest.TestCase):
         # ok...now publish it
         trans.publishEvent(event)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testFilterableStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.B")
@@ -105,9 +108,9 @@ class ComplexDataTestCase(unittest.TestCase):
 
         self.assertIsNotNone(val)
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testPlainStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.A")
@@ -130,9 +133,9 @@ class ComplexDataTestCase(unittest.TestCase):
         self.assertNotEqual(val.getPubTime(), 0)
         self.assertGreater(val.getPubTime(), val.getEventTime())
 
-    @unittest.skipUnless(TestEnvironment().validTestDomain(), "not within valid domain")
+    @unittest.skipUnless(EventsEnvironment().validTestDomain(), "not within valid domain")
     def testIllegalFilterableStatusEvent(self):
-        testEnv = TestEnvironment()
+        testEnv = EventsEnvironment()
         broker = testEnv.getBroker()
 
         topic = self.createTopicName("test_events_10_%s.A")
@@ -201,17 +204,11 @@ class ComplexDataTestCase(unittest.TestCase):
         for x in allValues:
             self.assertTrue(ps.exists(x))
 
-def suite():
-    """Returns a suite containing all the tests cases in this module."""
-    tests.init()
-    suites = []
-    suites += unittest.makeSuite(ComplexDataTestCase)
-    suites += unittest.makeSuite(tests.MemoryTestCase)
-    return unittest.TestSuite(suites)
 
-def run(shouldExit=False):
-    """Run the tests."""
-    tests.run(suite(), shouldExit)
+class ComplexDataMemoryTest(lsst.utils.tests.MemoryTestCase):
+    pass
+
 
 if __name__ == "__main__":
-    run(True)
+    lsst.utils.tests.init()
+    unittest.main()

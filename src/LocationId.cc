@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file LocationId.cc
  *
  * @ingroup ctrl/events
@@ -34,21 +34,27 @@
 #include "lsst/ctrl/events/LocationId.h"
 #include "lsst/ctrl/events/Host.h"
 
+#include <mutex>
+
 namespace lsst {
 namespace ctrl {
 namespace events {
+
+std::mutex mtx;
 
 LocationId::LocationId() {
     Host host = Host::getHost();
     _hostname = host.getHostName();
     _pid = getpid();
+    mtx.lock();
     _localID = _localCounter++;
+    mtx.unlock();
 }
 
-LocationId::LocationId(std::string const& hostname, int pid, int localID) : 
+LocationId::LocationId(std::string const& hostname, int pid, int localID) :
     _hostname(hostname),
     _pid(pid),
-    _localID(localID) 
+    _localID(localID)
     {}
 
 LocationId::LocationId(LocationId const& id) {
@@ -69,6 +75,12 @@ int LocationId::getProcessID() const {
 
 int LocationId::getLocalID() const {
     return _localID;
+}
+
+void LocationId::reset() {
+    mtx.lock();
+    _localCounter = 0;
+    mtx.unlock();
 }
 
 }}}

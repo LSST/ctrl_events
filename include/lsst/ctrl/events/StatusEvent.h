@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file StatusEvent.h
  *
  * @ingroup ctrl/events
@@ -51,7 +51,7 @@ using lsst::daf::base::PropertySet;
 
 namespace lsst {
 namespace ctrl {
-namespace events { 
+namespace events {
 
 /**
  * @class StatusEvent
@@ -66,18 +66,18 @@ public:
     static std::string const ORIG_PROCESSID;
     static std::string const ORIG_LOCALID;
 
-    /** 
+    /**
      * @brief Constructor to create a StatusEvent
      */
     StatusEvent();
     virtual ~StatusEvent();
 
-    /** 
+    /**
      * @brief Constructor to convert a TextMessage into a StatusEvent
      */
     StatusEvent(cms::TextMessage *msg);
 
-    /** 
+    /**
      * @brief Constructor to create a StatusEvent
      * @param originator the LocationId of where this StatusEvent was created
      * @param ps a PropertySet
@@ -85,7 +85,7 @@ public:
     StatusEvent(LocationId const& originator, PropertySet const& ps);
 
 
-    /** 
+    /**
      * @brief Constructor to create a StatusEvent
      * @param originator the LocationId of where this StatusEvent was created
      * @param ps a PropertySet
@@ -94,7 +94,7 @@ public:
      */
     StatusEvent(LocationId const& originator, PropertySet const& ps, PropertySet const& filterable);
 
-   /** 
+   /**
     * @brief Constructor to create a StatusEvent
     * @param runid a string identify for this Event
     * @param originator the LocationId of where this StatusEvent was created
@@ -102,7 +102,7 @@ public:
     */
     StatusEvent(std::string const& runid, LocationId const& originator, PropertySet const& ps);
 
-    /** 
+    /**
      * @brief Constructor to create a StatusEvent
      * @param runid a string identify for this Event
      * @param originator the LocationId of where this StatusEvent was created
@@ -112,7 +112,7 @@ public:
      */
     StatusEvent(std::string const& runid, LocationId const& originator, PropertySet const& ps, PropertySet const& filterable);
 
-    /** 
+    /**
      * \brief Constructor to create a StatusEvent
      * \param runid a string identify for this Event
      * \param originator the LocationId of where this StatusEvent was created
@@ -121,7 +121,7 @@ public:
     StatusEvent(std::string const& runid, LocationId const& originator, CONST_PTR(PropertySet) psp);
 
 
-    /** 
+    /**
      * @brief Constructor to create a StatusEvent
      * @param runid a string identify for this Event
      * @param originator the LocationId of where this StatusEvent was created
@@ -132,7 +132,7 @@ public:
     StatusEvent(std::string const& runid, LocationId const& originator, CONST_PTR(PropertySet) psp, PropertySet const& filterable);
 
 
-    /** 
+    /**
      * @brief accessor to get originator information
      * @return a LocationId containing the Originator information
      */

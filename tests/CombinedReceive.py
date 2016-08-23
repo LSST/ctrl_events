@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -12,14 +12,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -40,19 +40,19 @@ class CombinedReceiveEventTestCase(lsst.utils.tests.TestCase):
 
     def sendEvent(self, broker, topic):
         trans = events.EventTransmitter(broker, topic)
-        
+
         root = PropertySet()
         root.set(events.Event.TOPIC,topic)
         root.set("myname","myname")
         root.set(events.Event.STATUS, "my special status")
         root.set(events.Event.RUNID,"srptestrun")
-        
+
         event = events.Event("srptestrun", root)
-    
-        # wait a short time so we can see the difference between the time 
+
+        # wait a short time so we can see the difference between the time
         # the event is created and the time it is published
         time.sleep(2)
-    
+
         # ok...now publish it
         trans.publishEvent(event)
 
@@ -66,15 +66,15 @@ class CombinedReceiveEventTestCase(lsst.utils.tests.TestCase):
 
         pid = os.getpid()
         host_pid = "%s_%d" % (thisHost,pid)
-    
+
         topicA = "test_events_9_%s.A" % host_pid
         topicB = "test_events_9_%s.B" % host_pid
         topicC = "test_events_9_%s.*" % host_pid
-    
+
         recvA = events.EventReceiver(broker, topicA)
         recvB = events.EventReceiver(broker, topicB)
         recvC = events.EventReceiver(broker, topicC)
-    
+
         # send a test event on topicA and topicB
         self.sendEvent(broker, topicA)
         self.sendEvent(broker, topicB)
@@ -100,14 +100,14 @@ class CombinedReceiveEventTestCase(lsst.utils.tests.TestCase):
         # receiving no more messages on topicB
         val = recvB.receiveEvent(1)
         self.assertIsNone(val)
-    
+
         # receive event on topicC, and check to see it's the one sent to topicA
         val = recvC.receiveEvent()
         self.assertIsNotNone(val)
         ps = val.getPropertySet()
         name = ps.get(events.Event.TOPIC)
         self.assertEqual(name, topicA)
-    
+
         # receive event on topicC, and check to see it's the one sent to topicB
         val = recvC.receiveEvent()
         self.assertIsNotNone(val)
@@ -118,7 +118,7 @@ class CombinedReceiveEventTestCase(lsst.utils.tests.TestCase):
         # receiving no more messages on topicC
         val = recvC.receiveEvent(1)
         self.assertIsNone(val)
-    
+
 
 class CombinedMemoryTestCase(lsst.utils.tests.MemoryTestCase):
     pass

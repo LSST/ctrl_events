@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file CommandEvent.cc
  *
  * @ingroup ctrl/events
@@ -103,7 +103,7 @@ CommandEvent::CommandEvent(std::string const& runId, LocationId const&  originat
     _constructor(originator, destination);
 }
 
-/** private method common to all constructors containing, originator, the 
+/** private method common to all constructors containing, originator, the
   * originating location of this event, and destination, the destination
   * location for this event.
   */
@@ -134,16 +134,16 @@ void CommandEvent::populateHeader(cms::TextMessage* msg) const {
     msg->setIntProperty(DEST_LOCALID, _psp->get<int>(DEST_LOCALID));
 }
 
-PTR(LocationId) CommandEvent::getOriginator() const { 
+PTR(LocationId) CommandEvent::getOriginator() const {
     std::string hostname =  _psp->get<std::string>(ORIG_HOSTNAME);
     int pid =  _psp->get<int>(ORIG_PROCESSID);
     int local =  _psp->get<int>(ORIG_LOCALID);
     return PTR(LocationId)(new LocationId(hostname, pid, local));
 }
 
-PTR(LocationId) CommandEvent::getDestination() const { 
-    std::string hostname = _psp->get<std::string>(DEST_HOSTNAME); 
-    int pid = _psp->get<int>(DEST_PROCESSID); 
+PTR(LocationId) CommandEvent::getDestination() const {
+    std::string hostname = _psp->get<std::string>(DEST_HOSTNAME);
+    int pid = _psp->get<int>(DEST_PROCESSID);
     int local = _psp->get<int>(DEST_LOCALID);
     return PTR(LocationId)(new LocationId(hostname, pid, local));
 }

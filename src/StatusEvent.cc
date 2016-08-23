@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file StatusEvent.cc
  *
  * @ingroup ctrl/events
@@ -61,37 +61,37 @@ StatusEvent::StatusEvent(cms::TextMessage *msg) : Event(msg) {
     _psp->set(ORIG_LOCALID, (int)msg->getIntProperty(ORIG_LOCALID));
 }
 
-StatusEvent::StatusEvent(LocationId const& originatorID, 
+StatusEvent::StatusEvent(LocationId const& originatorID,
                          PropertySet const& ps) : Event(ps) {
     _constructor(originatorID);
 }
 
 StatusEvent::StatusEvent(LocationId const& originatorID,
-                         PropertySet const& ps, 
+                         PropertySet const& ps,
                          PropertySet const& filterable) : Event(ps, filterable) {
     _constructor(originatorID);
 }
 
-StatusEvent::StatusEvent(std::string const& runID, 
-                         LocationId const& originatorID, 
+StatusEvent::StatusEvent(std::string const& runID,
+                         LocationId const& originatorID,
                          CONST_PTR(PropertySet) psp) : Event(runID, *psp) {
     _constructor(originatorID);
 }
 
-StatusEvent::StatusEvent(std::string const& runID, 
-                         LocationId const& originatorID, 
-                         CONST_PTR(PropertySet) psp, 
+StatusEvent::StatusEvent(std::string const& runID,
+                         LocationId const& originatorID,
+                         CONST_PTR(PropertySet) psp,
                          PropertySet const& filterable) : Event(runID, *psp, filterable) {
     _constructor(originatorID);
 }
 
-StatusEvent::StatusEvent(std::string const& runID, 
-                         LocationId const& originatorID, 
+StatusEvent::StatusEvent(std::string const& runID,
+                         LocationId const& originatorID,
                          PropertySet const& ps) : Event(runID, ps) {
     _constructor(originatorID);
 }
 
-StatusEvent::StatusEvent(std::string const& runID, 
+StatusEvent::StatusEvent(std::string const& runID,
                          LocationId const& originatorID,
                          PropertySet const& ps,
                          PropertySet const& filterable) : Event(runID, ps, filterable) {

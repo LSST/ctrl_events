@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2015  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file LogEvent.cc
  *
  * @ingroup ctrl/events
@@ -55,7 +55,7 @@ const std::string LogEvent::LOCATION = "location";
 
 const std::string LogEvent::LOGGING_TOPIC = "Logging";
 
-/** 
+/**
  * @brief Creates LogEvent which contains a PropertySet
  */
 
@@ -80,7 +80,7 @@ void LogEvent::_init() {
 }
 
 
-/** 
+/**
  * @brief Constructor to take a JMS TextMessage and turn it into a LogEvent
  * @param msg a TextMessage
  */
@@ -104,7 +104,7 @@ void LogEvent::populateHeader(cms::TextMessage* msg) const {
 
 }
 
-/** 
+/**
  * @brief retreive the log level
  * @return the logging level at which the LogRecord message was set
  */
@@ -112,23 +112,23 @@ int LogEvent::getLevel() {
     return _psp->get<int>(LogEvent::LEVEL);
 }
 
-/** 
- * @brief Retreive the log message 
+/**
+ * @brief Retreive the log message
  * @return a string containing the log message itself
  */
 std::string LogEvent::getLogger() {
     return _psp->get<std::string>(LogEvent::LOGGER);
 }
 
-/** 
- * @brief Retreive the log message 
+/**
+ * @brief Retreive the log message
  * @return a string containing the log message itself
  */
 std::string LogEvent::getLoggingTopic() {
     return LogEvent::LOGGING_TOPIC;
 }
 
-/** 
+/**
   * @brief destructor
   */
 LogEvent::~LogEvent() {

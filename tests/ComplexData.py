@@ -1,11 +1,11 @@
 from builtins import range
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -13,14 +13,14 @@ from builtins import range
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -52,7 +52,7 @@ class ComplexDataTestCase(lsst.utils.tests.TestCase):
 
     def sendPlainStatusEvent(self, broker, topic, runID=None):
         trans = events.EventTransmitter(broker, topic)
-        
+
         root = PropertySet()
         root.set(events.Event.TOPIC, topic)
         root.set("myname","myname")
@@ -63,7 +63,7 @@ class ComplexDataTestCase(lsst.utils.tests.TestCase):
         root.set("logger.pid.xyzzy", 1)
         root.set("logger.pid.plover", 3.14)
         root.set("logger.pid.plugh", "a hollow voice says")
-        
+
         eventSystem = events.EventSystem.getDefaultEventSystem();
         locationID = eventSystem.createOriginatorId()
         if runID is None:

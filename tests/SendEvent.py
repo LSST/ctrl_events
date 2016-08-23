@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -12,14 +12,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -45,13 +45,13 @@ class SendEventTestCase(lsst.utils.tests.TestCase):
         self.broker = testEnv.getBroker()
 
         topic = "test_events_3_%s_%d" % (self.thisHost, os.getpid())
-    
+
         runID = "test3_runid"
         recv = events.EventReceiver(self.broker, topic)
-    
+
         trans = events.EventTransmitter(self.broker, topic)
-        
-    
+
+
         DATE = "date"
         DATE_VAL = "2007-07-01T14:28:32.546012"
 
@@ -93,14 +93,14 @@ class SendEventTestCase(lsst.utils.tests.TestCase):
         root.set(MISC2, MISC2_VAL)
         root.set(MISC3, MISC3_VAL)
         root.setDouble(DATA, DATA_VAL)
-        
+
         event = events.Event(runID, root)
         trans.publishEvent(event)
-    
-    
+
+
         val = recv.receiveEvent()
         self.assertIsNotNone(val)
-    
+
         # check the validity of all sent values
         ps = val.getPropertySet()
         self.assertEqual(ps.get(DATE), DATE_VAL)
@@ -120,7 +120,7 @@ class SendEventTestCase(lsst.utils.tests.TestCase):
         self.assertEqual(ps.get(events.Event.STATUS), "unknown")
         self.assertEqual(ps.get(events.Event.TOPIC), topic)
         self.assertEqual(ps.get(events.Event.TYPE), events.EventTypes.EVENT)
-        
+
         #
         # wait a short time to receive an event.  none was sent, so we should
         # time out and confirm that we didn't get anything

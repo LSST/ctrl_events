@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-# 
+#
 # LSST Data Management System
 #
 # Copyright 2008-2014  AURA/LSST.
-# 
+#
 # This product includes software developed by the
 # LSST Project (http://www.lsst.org/).
 #
@@ -12,14 +12,14 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
-# You should have received a copy of the LSST License Statement and 
-# the GNU General Public License along with this program.  If not, 
+#
+# You should have received a copy of the LSST License Statement and
+# the GNU General Public License along with this program.  If not,
 # see <https://www.lsstcorp.org/LegalNotices/>.
 #
 
@@ -44,17 +44,17 @@ class StatusEventOriginatorTestCase(lsst.utils.tests.TestCase):
     def sendEvent(self, brokerName, topic):
         """Send an Event."""
         trans = events.EventTransmitter(brokerName, topic)
-        
+
         root = PropertySet()
         root.set(events.Event.TOPIC, topic)
         root.set("myname","myname")
         root.set(events.StatusEvent.STATUS, "my special status")
         root.set(events.StatusEvent.RUNID,"srptestrun")
         root.set("bazinga", "sheldon")
-        
+
         originatorId = events.LocationId()
         event = events.StatusEvent("srptestrun", originatorId, root)
-    
+
         # ok...now publish it
         trans.publishEvent(event)
 
@@ -65,20 +65,20 @@ class StatusEventOriginatorTestCase(lsst.utils.tests.TestCase):
         thisHost = platform.node()
 
         topic = "test_events_12_%s_%d" % (thisHost, os.getpid())
-    
+
         recv = events.EventReceiver(broker, topic)
-    
+
         #
         # send a test event, and wait to receive it
         #
         self.sendEvent(broker, topic)
-    
+
         val = recv.receiveEvent()
         self.assertIsNotNone(val)
-    
+
         eventSystem = events.EventSystem.getDefaultEventSystem()
         statusevent = eventSystem.castToStatusEvent(val)
-   
+
         originatorID = statusevent.getOriginator()
         self.assertEqual(originatorID.getLocalID(), 0)
         self.assertEqual(originatorID.getProcessID(), os.getpid())

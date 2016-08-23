@@ -1,9 +1,9 @@
 // -*- lsst-c++ -*-
 
-/* 
+/*
  * LSST Data Management System
  * Copyright 2008-2016  AURA/LSST.
- * 
+ *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
  *
@@ -11,18 +11,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
- * You should have received a copy of the LSST License Statement and 
- * the GNU General Public License along with this program.  If not, 
+ *
+ * You should have received a copy of the LSST License Statement and
+ * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/** 
+/**
  * @file Event.cc
  *
  * @ingroup ctrl/events
@@ -196,18 +196,18 @@ void Event::_constructor(std::string const& runId, PropertySet const& ps, Proper
     if (!_psp->exists(STATUS)) {
         _psp->set(STATUS, "unknown");
     }
-    
+
     if (!_psp->exists(EVENTTIME)) {
         updateEventTime();
     }
-   
+
     // _runId is filled in here and is ignored in the passed PropertySet
     if (!runId.empty()) {
         _keywords.insert(RUNID);
         _psp->set(RUNID, runId);
     }
 
-    if (!_psp->exists(TYPE)) 
+    if (!_psp->exists(TYPE))
         _psp->set(TYPE, EventTypes::EVENT);
 
     // _topic is filled in on publish and is ignored in the passed PropertySet
@@ -252,7 +252,7 @@ void Event::populateHeader(cms::TextMessage* msg)  const {
         }
     }
 }
-            
+
 
 long long Event::getEventTime() {
     return _psp->get<long long>(EVENTTIME);
@@ -270,7 +270,7 @@ void Event::updateEventTime() {
 std::string Event::getEventDate() {
     long long eventTime = _psp->get<long long>(EVENTTIME);
     dafBase::DateTime dateTime(eventTime);
-    
+
     struct tm gmTime = dateTime.gmtime();
     return asctime(&gmTime);
 }
@@ -308,7 +308,7 @@ std::string Event::getPubDate() {
         return std::string();
 
     dafBase::DateTime dateTime(_pubTime);
-    
+
     struct tm pubTime = dateTime.gmtime();
     return asctime(&pubTime);
 }
@@ -370,7 +370,7 @@ std::string Event::marshall(PropertySet const& ps) {
     std::vector<std::string> names = ps.paramNames(false);
 
     boost::property_tree::ptree child;
- 
+
     for (std::string name : names) {
         if (ps.typeOf(name) == typeid(bool)) {
             add<bool>(name, "bool", ps, child);
@@ -461,7 +461,7 @@ bool Event::addDataItem(std::string const& typeInfo, boost::property_tree::ptree
   */
 PTR(PropertySet) Event::parsePropertySet(boost::property_tree::ptree child) {
     PTR(PropertySet) psp(new PropertySet);
-    
+
     BOOST_FOREACH(boost::property_tree::ptree::value_type const &v, child.get_child("")) {
         std::string label = v.first;
         BOOST_FOREACH(boost::property_tree::ptree::value_type &v2, child.get_child(label)) {
@@ -504,7 +504,7 @@ PTR(PropertySet) Event::unmarshall(std::string const& text) {
             }
         }
     }
-        
+
     return psp;
 }
 

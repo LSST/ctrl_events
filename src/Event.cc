@@ -271,7 +271,7 @@ std::string Event::getEventDate() {
     long long eventTime = _psp->get<long long>(EVENTTIME);
     dafBase::DateTime dateTime(eventTime);
 
-    struct tm gmTime = dateTime.gmtime();
+    struct tm gmTime = dateTime.gmtime(dafBase::DateTime::UTC);
     return asctime(&gmTime);
 }
 
@@ -309,7 +309,7 @@ std::string Event::getPubDate() {
 
     dafBase::DateTime dateTime(_pubTime);
 
-    struct tm pubTime = dateTime.gmtime();
+    struct tm pubTime = dateTime.gmtime(dafBase::DateTime::UTC);
     return asctime(&pubTime);
 }
 

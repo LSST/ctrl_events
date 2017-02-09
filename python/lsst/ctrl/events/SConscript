@@ -1,9 +1,16 @@
-# -*- python -*-
-from lsst.sconsUtils import env, targets
-
-targets["python"] = env.SwigLoadableModule(
-    "_eventsLib", "eventsLib.i",
-    LIBS=env.getLibs("main python"),
-    SWIGFLAGS=env["SWIGFLAGS"] + ["-threads"]
-    )
-
+## -*- python -*-
+from lsst.sconsUtils import scripts
+scripts.BasicSConscript.pybind11([
+    "commandEvent",
+    "event",
+    "eventBroker",
+    "eventTypes",
+    "eventDequeuer",
+    "eventEnqueuer",
+    "eventReceiver",
+    "eventTransmitter",
+    "logEvent",
+    "receiver",
+    "statusEvent",
+    "transmitter",
+])

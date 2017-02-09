@@ -2,7 +2,7 @@
 
 /*
  * LSST Data Management System
- * Copyright 2008-2015  AURA/LSST.
+ * Copyright 2008-2017  AURA/LSST.
  *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
@@ -22,34 +22,14 @@
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-/**
- * @file EventBroker.h
- *
- * @ingroup ctrl/events
- *
- * @brief information about the Event Broker
- *
- */
-
-#ifndef LSST_CTRL_EVENTS_EVENTBROKER_H
-#define LSST_CTRL_EVENTS_EVENTBROKER_H
+#include "lsst/ctrl/events/EventBroker.h"
 
 namespace lsst {
 namespace ctrl {
 namespace events {
 
-/**
- * @class EventBroker
- * @brief class representing default information for the event broker
- */
-class EventBroker {
-public:
-    static const int DEFAULTHOSTPORT;
-};
+const int EventBroker::DEFAULTHOSTPORT = 61616;
 
 }
 }
 }
-
-#endif /*end LSST_CTRL_EVENTS_EVENTBROKER_H*/
-

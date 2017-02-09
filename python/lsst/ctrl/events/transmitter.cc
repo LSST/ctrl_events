@@ -1,11 +1,9 @@
-// -*- lsst-c++ -*-
-
 /*
  * LSST Data Management System
- * Copyright 2008-2015  AURA/LSST.
  *
  * This product includes software developed by the
  * LSST Project (http://www.lsst.org/).
+ * See the COPYRIGHT file
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,35 +19,34 @@
  * the GNU General Public License along with this program.  If not,
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
+#include <memory>
 
-/**
- * @file EventBroker.h
- *
- * @ingroup ctrl/events
- *
- * @brief information about the Event Broker
- *
- */
+#include "pybind11/pybind11.h"
 
-#ifndef LSST_CTRL_EVENTS_EVENTBROKER_H
-#define LSST_CTRL_EVENTS_EVENTBROKER_H
+#include "lsst/ctrl/events/Event.h"
+#include "lsst/ctrl/events/Transmitter.h"
+
+namespace py = pybind11;
+using namespace pybind11::literals;
 
 namespace lsst {
 namespace ctrl {
 namespace events {
 
-/**
- * @class EventBroker
- * @brief class representing default information for the event broker
- */
-class EventBroker {
-public:
-    static const int DEFAULTHOSTPORT;
-};
+PYBIND11_PLUGIN(_transmitter) {
+    py::module::import("lsst.ctrl.events._event");
 
-}
-}
+    py::module mod("_transmitter", "Python wrapper for _transmitter library");
+
+    py::class_<Transmitter, std::shared_ptr<Transmitter>> cls(mod, "Transmitter");
+
+    // do not wrap the constructor because class is pure virtual
+
+    cls.def("publishEvent", &Transmitter::publishEvent);
+    // do not wrap getDestinationPropertyName because it is pure virtual
+    cls.def("getDestinationName", &Transmitter::getDestinationName);
+
+    return mod.ptr();
 }
 
-#endif /*end LSST_CTRL_EVENTS_EVENTBROKER_H*/
-
+}}} // lsst::ctrl::events

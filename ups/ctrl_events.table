@@ -7,9 +7,8 @@ setupRequired(daf_base)
 setupRequired(pex_exceptions)
 setupRequired(log4cxx)
 setupRequired(log)
+setupRequired(pybind11)
 
-
-setupOptional("swig")
 setupOptional("doxygen")
 
 envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)

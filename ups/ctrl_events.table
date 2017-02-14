@@ -1,6 +1,5 @@
 setupRequired(python_future)
 setupRequired(boost)
-setupRequired(activemqcpp)
 setupRequired(utils)
 setupRequired(base)
 setupRequired(daf_base)

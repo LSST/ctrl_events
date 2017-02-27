@@ -21,5 +21,4 @@ from __future__ import absolute_import
 # see <http://www.lsstcorp.org/LegalNotices/>.
 #
 
-from .eventsLib import *
 from .version import *
